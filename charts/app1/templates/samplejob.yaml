@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    job-name: {{.Values.pod.name}}
+  name: {{.Values.pod.name}}
+  namespace: {{ .Values.namespace }}
+spec:
+  backoffLimit: 0
+  selector:
+    matchLabels:
+      job-name: {{.Values.pod.name}}
+  template:
+    metadata:
+      labels:
+        job-name: {{.Values.pod.name}}
+    spec:
+      containers:
+      - name: {{.Values.pod.name}}
+        image: "{{.Values.pod.image}}:{{.Values.pod.tag}}"
+      restartPolicy: Never

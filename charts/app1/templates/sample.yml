@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.pod.name }}-app2"
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Values.pod.name }}-app2"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.pod.name }}-app2"
+    spec:
+      containers:
+        - name: "{{ .Values.pod.name }}-app2"
+          image: "{{.Values.pod.image}}:{{.Values.pod.tag}}"
+          ports:
+            - containerPort: 9000
+              name: {{ .Values.pod.portName }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pod.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.pod.name }}
+  type: LoadBalancer
+  ports:
+    - port: 9000
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: {{ .Values.pod.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  rules:
+    - host: "{{.Values.pod.name}}.mydomain.com"
+      http:
+        paths:
+          - path: /bar
+            backend:
+              serviceName: {{ .Values.pod.name }}
+              servicePort: 80

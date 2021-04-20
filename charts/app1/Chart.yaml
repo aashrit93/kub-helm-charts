@@ -1,0 +1,16 @@
+# apiVersion: v2
+# description: A Helm chart for a sample gitops application
+# name: gitops-getting-started
+# version: 0.1.0
+# dependencies:
+#   - name: wordpress
+#     version: ~9.3.3
+#     repository: https://charts.bitnami.com/bitnami
+# maintainers:
+#   - name: Ricardo Rocha
+#     email: ricardo.rocha@cern.ch
+apiVersion: v2
+appVersion: "1.0"
+description: A Helm chart for Kubernetes
+name: app1
+version: 0.0.1
