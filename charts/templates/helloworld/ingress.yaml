@@ -1,0 +1,15 @@
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+  namespace: "{{ .Values.common.namespace }}"
+spec:
+  rules:
+    - host: "{{.Values.helloworld.name}}.mydomain.com"
+      http:
+        paths:
+          - path: /bar
+            backend:
+              serviceName: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+              servicePort: 80

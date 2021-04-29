@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nginx.name }}
+  namespace: {{ .Values.common.namespace }}
+  labels:
+    app: "{{ .Values.common.namespace }}-{{ .Values.nginx.name }}"
+spec:
+  replicas: {{ .Values.nginx.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.common.namespace }}-{{ .Values.nginx.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.common.namespace }}-{{ .Values.nginx.name }}"
+    spec:
+      containers:
+        - name: "{{ .Values.nginx.name }}"
+          image: "{{.Values.nginx.image.name}}:{{.Values.nginx.image.tag}}"
+          ports:
+            - containerPort: {{ .Values.nginx.port }}

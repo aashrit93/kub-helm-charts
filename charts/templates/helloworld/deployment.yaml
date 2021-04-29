@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+  namespace: "{{ .Values.common.namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+  replicas: {{ .Values.helloworld.replicas }}
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+    spec:
+      containers:
+        - name: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+          image: "{{.Values.helloworld.image.name}}:{{.Values.helloworld.image.tag}}"
+          ports:
+            - containerPort: 9000
+              name: "hwport"

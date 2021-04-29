@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.common.namespace }}-{{ .Values.helloworld.name }}"
+  namespace: "{{ .Values.common.namespace }}"
+spec:
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9345
